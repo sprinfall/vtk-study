@@ -1,0 +1,13 @@
+add_executable(Cone1 Cone1.cxx)
+add_executable(Cone2 Cone2.cxx)
+add_executable(Cone3 Cone3.cxx)
+add_executable(Cone4 Cone4.cxx)
+add_executable(Cone5 Cone5.cxx)
+add_executable(Cone6 Cone6.cxx)
+
+target_link_libraries(Cone1 ${VTK_LIBRARIES})
+target_link_libraries(Cone2 ${VTK_LIBRARIES})
+target_link_libraries(Cone3 ${VTK_LIBRARIES})
+target_link_libraries(Cone4 ${VTK_LIBRARIES})
+target_link_libraries(Cone5 ${VTK_LIBRARIES})
+target_link_libraries(Cone6 ${VTK_LIBRARIES})

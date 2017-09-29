@@ -14,6 +14,8 @@ int main()
 {
   // This creates a polygonal cylinder model with eight circumferential facets.
   // cylinder: ‘≤÷˘£¨‘≤Õ≤◊¥
+  // vtkCylinderSource is a procedural source object. This source creates a
+  // polygonal representation of a cylinder.
   vtkCylinderSource *cylinder = vtkCylinderSource::New();
   cylinder->SetResolution(8);  // ≤‡√Ê”–∞À√Ê (facets)
 
