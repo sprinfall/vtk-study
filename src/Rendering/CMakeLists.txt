@@ -3,6 +3,7 @@ project(Rendering)
 set(RENDERING_SRCS
     Cylinder
     CADPart
+    FilterCADPart
     )
 
 foreach(name ${RENDERING_SRCS})
