@@ -14,43 +14,43 @@
 #include "vtkRenderWindow.h"
 #include "vtkRenderWindowInteractor.h"
 #include "vtkRenderer.h"
+#include "vtkSmartPointer.h"
 
-int main()
-{
+// scalar, 标量
+
+int main() {
   // Create a float array which represents the points.
-  vtkFloatArray* pcoords = vtkFloatArray::New();
+  auto coords = vtkSmartPointer<vtkFloatArray>::New();
 
   // Note that by default, an array has 1 component.
-  // We have to change it to 3 for points
-  pcoords->SetNumberOfComponents(3);
+  // We have to change it to 3 for points.
+  coords->SetNumberOfComponents(3);
 
-  // We ask pcoords to allocate room for at least 4 tuples
+  // We ask coords to allocate room for at least 4 tuples
   // and set the number of tuples to 4.
-  pcoords->SetNumberOfTuples(4);
+  coords->SetNumberOfTuples(4);
 
   // Assign each tuple. There are 5 specialized versions of SetTuple:
   // SetTuple1 SetTuple2 SetTuple3 SetTuple4 SetTuple9
   // These take 1, 2, 3, 4 and 9 components respectively.
-  float pts[4][3] =
-  {
+  float pts[4][3] = {
     { 0.0, 0.0, 0.0 },
     { 0.0, 1.0, 0.0 },
     { 1.0, 0.0, 0.0 },
     { 1.0, 1.0, 0.0 }
   };
 
-  for (int i = 0; i < 4; i++)
-  {
-    pcoords->SetTuple(i, pts[i]);
+  for (int i = 0; i < 4; i++) {
+    coords->SetTuple(i, pts[i]);
   }
 
-  // Create vtkPoints and assign pcoords as the internal data array.
-  vtkPoints* points = vtkPoints::New();
-  points->SetData(pcoords);
+  // Create vtkPoints and assign coords as the internal data array.
+  auto points = vtkSmartPointer<vtkPoints>::New();
+  points->SetData(coords);
 
   // Create the cells. In this case, a triangle strip with 2 triangles
   // (which can be represented by 4 points)
-  vtkCellArray* strips = vtkCellArray::New();
+  auto strips = vtkSmartPointer<vtkCellArray>::New();
   strips->InsertNextCell(4);
   strips->InsertCellPoint(0);
   strips->InsertCellPoint(1);
@@ -60,7 +60,7 @@ int main()
   // Create an integer array with 4 tuples. Note that when using
   // InsertNextValue (or InsertNextTuple1 which is equivalent in
   // this situation), the array will expand automatically
-  vtkIntArray* temperature = vtkIntArray::New();
+  auto temperature = vtkSmartPointer<vtkIntArray>::New();
   temperature->SetName("Temperature");
   // See: mapper->SetScalarRange(0, 40);
   temperature->InsertNextValue(10);
@@ -69,7 +69,8 @@ int main()
   temperature->InsertNextValue(40);
 
   // Create a double array.
-  vtkDoubleArray* vorticity = vtkDoubleArray::New();
+  // 涡量，旋度
+  auto vorticity = vtkSmartPointer<vtkDoubleArray>::New();
   vorticity->SetName("Vorticity");
   vorticity->InsertNextValue(2.7);
   vorticity->InsertNextValue(4.1);
@@ -77,50 +78,37 @@ int main()
   vorticity->InsertNextValue(3.4);
 
   // Create the dataset. In this case, we create a vtkPolyData
-  vtkPolyData* polyData = vtkPolyData::New();
+  auto poly_data = vtkSmartPointer<vtkPolyData>::New();
   // Assign points and cells
-  polyData->SetPoints(points);
-  polyData->SetStrips(strips);
+  poly_data->SetPoints(points);
+  poly_data->SetStrips(strips);
   // Assign scalars
-  polyData->GetPointData()->SetScalars(temperature);
+  // NOTE: The number of point attributes must equal to the number of points.
+  poly_data->GetPointData()->SetScalars(temperature);
   // Add the vorticity array. In this example, this field is not used.
-  polyData->GetPointData()->AddArray(vorticity);
+  poly_data->GetPointData()->AddArray(vorticity);
 
   // Create the mapper and set the appropriate scalar range
-  // (default is (0,1)
-  vtkPolyDataMapper* mapper = vtkPolyDataMapper::New();
-  mapper->SetInputData(polyData);
+  // (default is (0,1))
+  auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+  mapper->SetInputData(poly_data);
   mapper->SetScalarRange(0, 40);
 
   // Create an actor.
-  vtkActor* actor = vtkActor::New();
+  auto actor = vtkSmartPointer<vtkActor>::New();
   actor->SetMapper(mapper);
 
   // Create the rendering objects.
-  vtkRenderer* ren = vtkRenderer::New();
-  ren->AddActor(actor);
+  auto renderer = vtkSmartPointer<vtkRenderer>::New();
+  renderer->AddActor(actor);
 
-  vtkRenderWindow* renWin = vtkRenderWindow::New();
-  renWin->AddRenderer(ren);
+  auto render_window = vtkSmartPointer<vtkRenderWindow>::New();
+  render_window->AddRenderer(renderer);
 
-  vtkRenderWindowInteractor* iren = vtkRenderWindowInteractor::New();
-  iren->SetRenderWindow(renWin);
-  iren->Initialize();
-  iren->Start();
-
-  pcoords->Delete();
-  points->Delete();
-  strips->Delete();
-  temperature->Delete();
-  vorticity->Delete();
-  polyData->Delete();
-  mapper->Delete();
-  actor->Delete();
-  ren->Delete();
-  renWin->Delete();
-  iren->Delete();
+  auto interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+  interactor->SetRenderWindow(render_window);
+  interactor->Initialize();
+  interactor->Start();
 
   return 0;
 }
-
-
