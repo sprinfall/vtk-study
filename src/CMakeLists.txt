@@ -17,9 +17,12 @@ set(SRCS
 	arrays
 	xml_poly_data_read
 	xml_poly_data_write
+	ply_reader
     )
 
 foreach(name ${SRCS})
     add_executable(${name} MACOSX_BUNDLE ${name}.cpp)
     target_link_libraries(${name} ${VTK_LIBRARIES})
 endforeach()
+
+add_subdirectory(qvtk_cylinder)
