@@ -15,6 +15,9 @@ set(SRCS
     debug_warning
     observer_command
 	arrays
+	ds01_triangle_points
+	ds02_triangle_vertices
+    ds03_triangle_lines
 	xml_poly_data_read
 	xml_poly_data_write
 	ply_reader
