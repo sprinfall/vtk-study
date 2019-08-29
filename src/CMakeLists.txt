@@ -18,6 +18,7 @@ set(SRCS
 	ds01_triangle_points
 	ds02_triangle_vertices
     ds03_triangle_lines
+    ds04_scalars
 	xml_poly_data_read
 	xml_poly_data_write
 	ply_reader
@@ -28,4 +29,10 @@ foreach(name ${SRCS})
     target_link_libraries(${name} ${VTK_LIBRARIES})
 endforeach()
 
-add_subdirectory(qvtk_cylinder)
+if(ENABLE_QT)
+    add_subdirectory(qt)
+endif()
+
+if(ENABLE_WX)
+    add_subdirectory(wx)
+endif()

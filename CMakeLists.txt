@@ -6,6 +6,7 @@ project(vtk-study)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 option(ENABLE_QT "Build Qt examples" OFF)
+option(ENABLE_WX "Build wxWidgets examples" OFF)
 
 find_package(VTK REQUIRED)
 if(NOT VTK_DIR)
@@ -18,6 +19,4 @@ message(STATUS "VTK include dir:\t" ${VTK_INCLUDE_DIRS})
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if(ENABLE_QT)
-	add_subdirectory(src)
-endif()
+add_subdirectory(src)
