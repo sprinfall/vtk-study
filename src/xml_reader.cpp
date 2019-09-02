@@ -1,24 +1,25 @@
-// Read PLY file using vtkPLYReader.
+// Read XML poly-data using vtkXMLPolyDataReader.
+
+#include <iostream>
 
 #include "vtkActor.h"
-#include "vtkPLYReader.h"
 #include "vtkPolyData.h"
 #include "vtkPolyDataMapper.h"
 #include "vtkRenderWindow.h"
 #include "vtkRenderWindowInteractor.h"
 #include "vtkRenderer.h"
+#include "vtkXMLPolyDataReader.h"
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
-    std::cout << "Usage:" << std::endl;
-    std::cout << "\tply_reader <ply file>" << std::endl;
+    std::cout << "Usage: xml_reader <vtk xml file>" << std::endl;
     return 1;
   }
 
   const char* file_path = argv[1];
-  std::cout << "PLY file: " << file_path << std::endl;
+  std::cout << "file: " << file_path << std::endl;
 
-  auto reader = vtkSmartPointer<vtkPLYReader>::New();
+  auto reader = vtkSmartPointer<vtkXMLPolyDataReader>::New();
 
   if (!reader->CanReadFile(file_path)) {
     std::cerr << "Can't read " << file_path << std::endl;
@@ -28,7 +29,9 @@ int main(int argc, char* argv[]) {
   reader->SetFileName(file_path);
   reader->Update();  // Update() forces execution of the pipeline.
 
-  vtkSmartPointer<vtkPolyData> poly_data(reader->GetOutput());
+  vtkSmartPointer<vtkPolyData> poly_data{ reader->GetOutput() };
+  // vtkPolyData 是有引用计数的，会在 smart pointer 和 `reader` 都超出作用域时
+  // 被删除。祥见 smart_pointer 示例。
 
   std::cout << "Number of points: " << poly_data->GetNumberOfPoints()
             << std::endl;
@@ -39,7 +42,7 @@ int main(int argc, char* argv[]) {
   mapper->SetScalarRange(0, 40);
 
   // Create an actor.
-  vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+  auto actor = vtkSmartPointer<vtkActor>::New();
   actor->SetMapper(mapper);
 
   // Create the rendering objects.

@@ -19,9 +19,9 @@ set(SRCS
 	ds02_triangle_vertices
     ds03_triangle_lines
     ds04_scalars
-	xml_poly_data_read
-	xml_poly_data_write
-	ply_reader
+	stl_ply_reader
+    xml_reader
+    xml_writer
     )
 
 foreach(name ${SRCS})

@@ -5,7 +5,7 @@
 #include "my_widget.h"
 
 MyWindow::MyWindow() {
-  setWindowTitle(tr("Paint Study"));
+  setWindowTitle(tr("Qt Cylinder"));
 
   QWidget* central_widget = new QWidget();
   setCentralWidget(central_widget);

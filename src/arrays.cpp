@@ -20,6 +20,8 @@
 
 int main() {
   // Create a float array which represents the points.
+  // 要创建点集，没必要先创建 float array，见后面。
+  // 但是作为 Data Array 的示例还是不错的。
   auto coords = vtkSmartPointer<vtkFloatArray>::New();
 
   // Note that by default, an array has 1 component.
@@ -30,9 +32,7 @@ int main() {
   // and set the number of tuples to 4.
   coords->SetNumberOfTuples(4);
 
-  // Assign each tuple. There are 5 specialized versions of SetTuple:
-  // SetTuple1 SetTuple2 SetTuple3 SetTuple4 SetTuple9
-  // These take 1, 2, 3, 4 and 9 components respectively.
+  // Assign each tuple.
   float pts[4][3] = {
     { 0.0, 0.0, 0.0 },
     { 0.0, 1.0, 0.0 },
@@ -44,18 +44,54 @@ int main() {
     coords->SetTuple(i, pts[i]);
   }
 
+  // 等价于：
+  //   coords->SetTuple3(0, 0.0, 0.0, 0.0);
+  //   coords->SetTuple3(1, 0.0, 1.0, 0.0);
+  //   coords->SetTuple3(2, 1.0, 0.0, 0.0);
+  //   coords->SetTuple3(3, 1.0, 1.0, 0.0);
+
   // Create vtkPoints and assign coords as the internal data array.
   auto points = vtkSmartPointer<vtkPoints>::New();
   points->SetData(coords);
+  // 其实，没必要先定义 coords，直接像下面这样就可以了：
+  //   points->SetNumberOfPoints(4);
+  //   for (int i = 0; i < 4; ++i) {
+  //     points->SetPoint(i, pts[i]);
+  //   }
 
   // Create the cells. In this case, a triangle strip with 2 triangles
   // (which can be represented by 4 points)
+  // 三角形条带，点的个数为 N + 2，N 为条带数。
   auto strips = vtkSmartPointer<vtkCellArray>::New();
   strips->InsertNextCell(4);
-  strips->InsertCellPoint(0);
+  strips->InsertCellPoint(0);  // 参数为点的索引
   strips->InsertCellPoint(1);
   strips->InsertCellPoint(2);
   strips->InsertCellPoint(3);
+  // 一个 cell，包含 4 个点。等价于：
+  //   vtkIdType cell_points[] = { 0, 1, 2, 3 };
+  //   strips->InsertNextCell(4, cell_points);
+  // 是不是 strips，还得取决于后面的 poly_data->SetStrips()。
+
+  // 4 个点的坐标在 Z 轴上都是 0，所以大概如下面这样：
+  //
+  //  Y|
+  //   |
+  //   |
+  // 1 |            3
+  //   |
+  //   |
+  //   |
+  //   |____________________ X
+  //  0             2
+
+  // Strips (0-1-2-3) 则形如：
+  //
+  //  1 ------ 3
+  //  |  \     |
+  //  |    \   |
+  //  |      \ |
+  //  0 ------ 2
 
   // Create an integer array with 4 tuples. Note that when using
   // InsertNextValue (or InsertNextTuple1 which is equivalent in

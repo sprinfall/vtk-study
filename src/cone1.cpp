@@ -3,8 +3,8 @@
 // setup of source -> mapper -> actor -> renderer -> renderwindow is
 // typical of most VTK programs.
 
-// polygonal, ¶à±ßÐÎµÄ
-// cone, Ô²×¶Ìå
+// polygonal, å¤šè¾¹å½¢çš„
+// cone, åœ†é”¥ä½“
 
 #include "vtkActor.h"
 #include "vtkCamera.h"

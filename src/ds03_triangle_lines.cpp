@@ -1,11 +1,12 @@
-// 在 TriangleVertices 示例的基础上，将零维的点拓扑结构改成一维的线拓扑结构。
+// ds03_triangle_lines.cpp
+// 在 Triangle Vertices 示例的基础上，将零维的点拓扑结构改成一维的线拓扑结构。
 
-#include <vtkCellArray.h>
-#include <vtkLine.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataWriter.h>
-#include <vtkSmartPointer.h>
+#include "vtkCellArray.h"
+#include "vtkLine.h"
+#include "vtkPoints.h"
+#include "vtkPolyData.h"
+#include "vtkPolyDataWriter.h"
+#include "vtkSmartPointer.h"
 
 int main(int argc, char* argv[]) {
   // 创建点数据
@@ -35,6 +36,15 @@ int main(int argc, char* argv[]) {
   lines->InsertNextCell(line0);
   lines->InsertNextCell(line1);
   lines->InsertNextCell(line2);
+
+  // 或者像下面这样，不必先创建 vtkLine：
+  //   vtkIdType line_points[3][2] = {
+  //     { 0, 1 }, { 1, 2 }, { 2, 0 }
+  //   };
+  //   for (int i = 0; i < 3; ++i) {
+  //     lines->InsertNextCell(2, line_points[i]);
+  //   }
+  // InsertNextCell() 有很多不同的方式。
 
   // 创建 vtkPolyData 对象
   auto poly_data = vtkSmartPointer<vtkPolyData>::New();

@@ -1,11 +1,12 @@
+// ds01_triangle_points.cpp (ds: Data Structure)
 // 演示只有几何结构 (Geometry)，没有拓扑结构 (Topology) 的数据集。
 
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataWriter.h>
-#include <vtkSmartPointer.h>
+#include "vtkPoints.h"
+#include "vtkPolyData.h"
+#include "vtkPolyDataWriter.h"
+#include "vtkSmartPointer.h"
 
-int main(int argc, char* argv[]) {
+int main() {
   // 创建点数据
   auto points = vtkSmartPointer<vtkPoints>::New();
   points->InsertNextPoint(1.0, 0.0, 0.0);

@@ -1,13 +1,14 @@
-// 在 TrianglePoints 示例的基础上为数据集定义拓扑结构。
+// ds02_triangle_vertices.cpp
+// 在 Triangle Points 示例的基础上为数据集定义拓扑结构。
 // 这里的拓扑结构是零维的点，单元类型是 Vertex。
 
-#include <vtkCellArray.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataWriter.h>
-#include <vtkSmartPointer.h>
+#include "vtkCellArray.h"
+#include "vtkPoints.h"
+#include "vtkPolyData.h"
+#include "vtkPolyDataWriter.h"
+#include "vtkSmartPointer.h"
 
-int main(int argc, char* argv[]) {
+int main() {
   // 创建点的坐标
   double X[3] = { 1.0, 0.0, 0.0 };
   double Y[3] = { 0.0, 0.0, 1.0 };
