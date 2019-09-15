@@ -90,7 +90,15 @@ $ sudo apt install libxt-dev
 
 #### CMAKE_BUILD_TYPE
 
-设置为 Release。
+缺省为 Debug，开发环境中用  Debug 也是合理的。
+
+#### BUILD_SHARED_LIBS
+
+缺省为 ON，最好不要更改。
+
+如果不想在软件发布时打包一堆动态库，就用静态库吧。但是开发环境仍然建议用动态库，发布环境用静态库就可以了。
+
+**动态库安装（`sudo make install`）后，必须运行 `sudo ldconfig`，否则无法加载。**
 
 #### BUILD_DOCUMENTATION
 
@@ -98,7 +106,7 @@ $ sudo apt install libxt-dev
 
 #### BUILD_EXAMPLES
 
-Default is `UNCHECKED`, check it.
+建议勾选，VTK 的例子值得学习。
 
 #### BUILD_TESTING
 
@@ -112,7 +120,7 @@ Default is `UNCHECKED`, check it.
 
 如果不用 `CMAKE_PREFIX_PATH`，指定 `Qt5_DIR` 也是可以的。
 
-此外，我并没有用系统自带的源，而是从 Qt 官网下载安装的。 
+关于 Qt，我并没有用系统自带的源（我的桌面甚至还是 KDE 呢），而是从 Qt 官网直接下载安装的，这样避免跟系统软件包耦合，也能及时用上最新版的 Qt。
 
 ### Build & Install
 
@@ -121,7 +129,7 @@ $ make -j4
 $ sudo make install
 ```
 
-安装文件的目录为 `/usr/local/include/vtk-8.1/`和 `/usr/local/lib/`。
+安装文件的目录为 `/usr/local/include/vtk-8.2/`和 `/usr/local/lib/`。
 
 如果在编译示例时失败了（ `BUILD_EXAMPLES` 为 ON），可以先设置 `BUILD_EXAMPLES` 为 OFF。
 
