@@ -108,9 +108,9 @@ Default is `UNCHECKED`, check it.
 
 #### VTK_Group_Qt
 
-需要指定 `Qt5_DIR`，比如 `/home/adam/Qt/5.11.0/gcc_64/lib/cmake/Qt5/`。 
+把 Qt 的安装目录（比如 `/home/adam/Qt/5.13.1/gcc_64`）添加到 `CMAKE_PREFIX_PATH` 变量。在 CMake 界面上点 `Add Entry` 按钮，输入 Name 为 `CMAKE_PREFIX_PATH`，Type 为 `FILEPATH`。
 
-或者把 Qt 的安装目录添加到 `CMAKE_PREFIX_PATH` 变量。
+如果不用 `CMAKE_PREFIX_PATH`，指定 `Qt5_DIR` 也是可以的。
 
 此外，我并没有用系统自带的源，而是从 Qt 官网下载安装的。 
 
