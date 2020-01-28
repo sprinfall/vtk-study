@@ -14,6 +14,7 @@
 MyWindow::MyWindow() {
   setWindowTitle(tr("Qt Image Viewer"));
 
+  // QVTKOpenGLWidget
   widget_ = new QVTKOpenGLNativeWidget{};
 
 #if 0
@@ -46,7 +47,7 @@ MyWindow::MyWindow() {
   open_action->setShortcuts(QKeySequence::Open);
   open_action->setStatusTip(tr("Open an image file"));
 
-  connect(open_action, &QAction::triggered, this, &MyWindow::onOpenSlot);
+  connect(open_action, &QAction::triggered, this, &MyWindow::OnOpen);
 
   // Menu
 
@@ -57,26 +58,13 @@ MyWindow::MyWindow() {
   resize(800, 600);
 }
 
-void MyWindow::onOpenSlot() {
-#if 0
-  QString filter = "JPEG image file (*.jpg *.jpeg)";
-
-  QDir dir;
-  QString file_name = QFileDialog::getOpenFileName(this,
-                                                   QString(tr("Open Image")),
-                                                   dir.absolutePath(), filter);
-  if (file_name.isEmpty()) {
-    return;
-  }
-
-  QByteArray ba = file_name.toLocal8Bit();
+void MyWindow::OpenFile(const QString& file_path) {
   auto reader = vtkSmartPointer<vtkJPEGReader>::New();
+
+  QByteArray ba = file_path.toLocal8Bit();
   reader->SetFileName(ba.data());
-#else
-  auto reader = vtkSmartPointer<vtkJPEGReader>::New();
-  reader->SetFileName("D:\\github\\vtk-study\\data\\images\\test.jpg");
-#endif
 
+  // 如下这两种写法都可以（注意背后的差别）：
 #if 0
   reader->Update();  // Update() forces execution of the pipeline.
   image_viewer_->SetInputData(reader->GetOutput());
@@ -95,4 +83,18 @@ void MyWindow::onOpenSlot() {
   renderer_->DrawOn();
 
   widget_->GetRenderWindow()->Render();
+}
+
+void MyWindow::OnOpen() {
+  QString filter = "JPEG image file (*.jpg *.jpeg)";
+
+  QDir dir;
+  QString file_name = QFileDialog::getOpenFileName(this,
+                                                   QString(tr("Open Image")),
+                                                   dir.absolutePath(), filter);
+  if (file_name.isEmpty()) {
+    return;
+  }
+
+  OpenFile(file_name);
 }

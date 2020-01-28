@@ -11,4 +11,5 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED QUIET)
 
 add_subdirectory(cylinder)
 add_subdirectory(image_viewer)
-add_subdirectory(image_viewer2)
+add_subdirectory(image_viewer_2)
+add_subdirectory(ogl_vtk_mixed)

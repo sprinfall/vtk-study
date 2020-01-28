@@ -1,7 +1,5 @@
 set(TARGET_NAME wx_cylinder)
 
-project(${TARGET_NAME})
-
 set(SRCS
     app.cpp
     my_panel.cpp

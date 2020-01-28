@@ -3,6 +3,9 @@
 
 // See: https://programtalk.com/python-examples/vtkAll.vtkXMLPolyDataWriter/
 
+#include <iostream>
+#include <fstream>
+
 #include "vtkCellArray.h"
 #include "vtkDoubleArray.h"
 #include "vtkIntArray.h"
@@ -10,6 +13,26 @@
 #include "vtkPoints.h"
 #include "vtkPolyData.h"
 #include "vtkXMLPolyDataWriter.h"
+#include "vtkPolyDataWriter.h"
+#include "vtkTransform.h"
+
+std::ostream& operator<<(std::ostream& os, const vtkMatrix4x4& matrix) {
+  for (size_t i = 0; i < 4; ++i) {
+    for (size_t j = 0; j < 4; ++j) {
+      os << matrix.Element[i][j] << " ";
+    }
+  }
+  return os;
+}
+
+std::istream& operator>>(std::istream& is, vtkMatrix4x4& matrix) {
+  for (size_t i = 0; i < 4; ++i) {
+    for (size_t j = 0; j < 4; ++j) {
+      is >> matrix.Element[i][j];
+    }
+  }
+  return is;
+}
 
 int main() {
   auto points = vtkSmartPointer<vtkPoints>::New();
@@ -88,10 +111,32 @@ int main() {
   //poly_data->PrintSelf(std::cout, vtkIndent());
 
   auto writer = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
+  //auto writer = vtkSmartPointer<vtkPolyDataWriter>::New();
 
-  writer->SetFileName("test.vtk");
-  writer->SetInputData(poly_data);
-  writer->Update();
+  //writer->SetFileName("test.vtk");
+
+  //writer->SetFileName("D:\\proj\\scan_refresh\\data\\RestoreVtk\\test.vtk");
+  //writer->SetInputData(poly_data);
+
+  //writer->Update();
+  //writer->Write();  // TODO
+
+  // Optional - set the mode. The default is binary.
+  //writer->SetDataModeToBinary();
+  //writer->SetDataModeToAscii();
+
+  // Test transform
+  //auto transform = vtkSmartPointer<vtkTransform>::New();
+  //vtkMatrix4x4* matrix = transform->GetMatrix();
+  //std::cout << *matrix << std::endl;
+
+  //std::ofstream ofs("D:\\matrix.txt");
+  //ofs << *matrix << std::endl;
+
+  auto matrix = vtkSmartPointer<vtkMatrix4x4>::New();
+  std::ifstream ifs("D:\\matrix.txt");
+  ifs >> *matrix;
+  std::cout << *matrix << std::endl;
 
   return 0;
 }

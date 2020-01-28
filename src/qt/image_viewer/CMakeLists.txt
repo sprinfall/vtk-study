@@ -1,7 +1,5 @@
 set(TARGET_NAME qt_image_viewer)
 
-project(${TARGET_NAME})
-
 # Use the include path and library for Qt that is used by VTK.
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}

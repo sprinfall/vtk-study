@@ -1,6 +1,4 @@
-set(TARGET_NAME qt_image_viewer2)
-
-project(${TARGET_NAME})
+set(TARGET_NAME qt_image_viewer_2)
 
 # Use the include path and library for Qt that is used by VTK.
 include_directories(

@@ -3,16 +3,16 @@
 
 #include "QVTKOpenGLWidget.h"
 
-#include "my_window.h"
+#include "main_window.h"
 
 int main(int argc, char** argv) {
-  // needed to ensure appropriate OpenGL context is created for VTK rendering.
+  // Ensure appropriate OpenGL context is created for VTK rendering.
   QSurfaceFormat::setDefaultFormat(QVTKOpenGLWidget::defaultFormat());
 
   QApplication app(argc, argv);
 
-  MyWindow window;
-  window.show();
+  MainWindow main_window;
+  main_window.show();
 
   return app.exec();
 }

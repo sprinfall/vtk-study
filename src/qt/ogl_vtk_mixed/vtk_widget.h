@@ -1,5 +1,5 @@
-#ifndef MY_WIDGET_H_
-#define MY_WIDGET_H_
+#ifndef VTK_WIDGET_H_
+#define VTK_WIDGET_H_
 
 #include <QWidget>
 
@@ -10,13 +10,13 @@
 
 #include <QVTKOpenGLWidget.h>
 
-class MyWidget : public QVTKOpenGLWidget {
+class VtkWidget : public QVTKOpenGLWidget {
   Q_OBJECT
 
 public:
-  explicit MyWidget(QWidget* parent = nullptr);
+  explicit VtkWidget(QWidget* parent = nullptr);
 
-  ~MyWidget();
+  ~VtkWidget();
 
 private:
   vtkSmartPointer<vtkOpenGLRenderWindow> render_window_;
@@ -24,4 +24,4 @@ private:
   vtkSmartPointer<vtkActor> actor;  // TODO
 };
 
-#endif  // MY_WIDGET_H_
+#endif  // VTK_WIDGET_H_

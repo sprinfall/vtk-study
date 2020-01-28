@@ -15,8 +15,11 @@ class MyWindow : public QMainWindow {
 public:
   MyWindow();
 
+  // Open a given JPEG file.
+  void OpenFile(const QString& file_path);
+
 private slots:
-  void onOpenSlot();
+  void OnOpen();
 
 private:
   QVTKOpenGLNativeWidget* widget_;

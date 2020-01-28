@@ -1,4 +1,4 @@
-set(TARGET_NAME qt_cylinder)
+set(TARGET_NAME qt_ogl_vtk_mixed)
 
 # Use the include path and library for Qt that is used by VTK.
 include_directories(
@@ -6,13 +6,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
 
-set(SRCS
-    main.cpp
-    my_widget.cpp
-    my_widget.h
-    my_window.cpp
-    my_window.h
-    )
+file(GLOB SRCS *.cpp *.h)
 
 add_executable(${TARGET_NAME} MACOSX_BUNDLE ${SRCS})
 
