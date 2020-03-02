@@ -20,6 +20,15 @@ VTK 缺省编译为动态库（CMake 选项 `BUILD_SHARED_LIBS` 为 ON）。
 
 动态库链接 (LINK) 快，但是程序发布时带一堆 DLL 还是挺麻烦的。所以，可以考虑开发时用动态库，发布时用静态库，比如在 Jenkins 那台 PC 上用静态链接。
 
+### Debug & Release
+
+缺省情况下，编译 VTK 得到的库文件，Debug 和 Release 版文件名相同。 这就导致执行 CMake INSTALL 时，无法同时安装 Debug 和 Release 两套库文件。
+
+解决办法是设置 `CMAKE_DEBUG_POSTFIX` (需要在 CMake 界面上勾选 `Advanced` 选项才能找到这个变量)，比如设 `CMAKE_DEBUG_POSTFIX` 为 `d`，这样 Debug 
+版的库文件就多了一个 `d` 后缀，比如 `vtkCommonCore-8.2d.lib`。
+
+在你的项目的 CMake 中，仍然通过 CMake 寻找 VTK，不需做任何更改。你的项目在 Debug 编译时，链接的就是有 `d` 后缀的库，在 Release 编译时，链接的就是没有 `d` 后缀的库。
+
 ### Qt
 
 用 CMake 配置 VTK 时，要勾选 `VTK_Group_Qt`。

@@ -32,7 +32,8 @@ VtkWidget::VtkWidget(QWidget* parent)
 
   // Set interactor style.
   // vtkInteractorStyleMultiTouchCamera could also be a good choice.
-  auto style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+  //auto style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+  auto style = vtkSmartPointer<vtkInteractorStyleMultiTouchCamera>::New();
   render_window_->GetInteractor()->SetInteractorStyle(style);
 }
 
